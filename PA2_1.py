@@ -110,7 +110,8 @@ Image2, # Frame 1
 			)
 	
 	#creating the u and v vector
-	u = v = np.nan*np.ones(S)
+	u = np.nan*np.ones(S)
+	v = np.nan*np.ones(S)
 	
 	# Calculating the u and v arrays for the good features obtained n the previous step.
 	for l in feature:
@@ -132,7 +133,8 @@ Image2, # Frame 1
 		A2 = np.linalg.pinv(A1)
 		A3 = np.dot(A2,LK_T)
 		
-		(u[i,j],v[i,j]) = np.dot(A3,IT) # we have the vectors with minimized square error
+		u[i,j] = np.dot(A3,IT)[0] # we have the vectors with minimized square error
+		v[i,j] = np.dot(A3,IT)[1] # we have the vectors with minimized square error
 	
 	#======= Pick Random color for vector plot========
 	colors = "bgrcmykw"

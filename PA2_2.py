@@ -98,7 +98,8 @@ def LucasKanade(I1, I2):
 	features = cv2.goodFeaturesToTrack(I1, 10000, 0.01, 10)
 	features = np.int0(features)
 
-	u = v = np.ones((S))
+	u = np.ones((S))
+	v = np.ones((S))
 	for l in features:
 		j,i = l.ravel()
 		IX = ([Ix[i-1,j-1],Ix[i,j-1],Ix[i-1,j-1],Ix[i-1,j],Ix[i,j],Ix[i+1,j],Ix[i-1,j+1],Ix[i,j+1],Ix[i+1,j-1]])
@@ -115,7 +116,8 @@ def LucasKanade(I1, I2):
 		A1 = np.dot(LK_T,LK)
 		A2 = np.linalg.pinv(A1)
 		A3 = np.dot(A2,LK_T)
-		(u[i,j],v[i,j]) = np.dot(A3,IT) # we have the vectors with minimized square error
+		u[i,j] = np.dot(A3,IT)[0] # we have the vectors with minimized square error
+		v[i,j] = np.dot(A3,IT)[1] # we have the vectors with minimized square error
 
 	u = np.flipud(u)
 	v = np.flipud(v)
